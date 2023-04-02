@@ -5,6 +5,10 @@ struct User {
 	User(int userFd) : fd(userFd) {
 	}
 
+	int getFd() {
+		return fd;
+	}
+
 private:
 	int fd;
 };
