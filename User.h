@@ -10,6 +10,8 @@ struct User {
 	}
 
 private:
+	// information about user
+	// for now is FD only
 	int fd;
 };
 

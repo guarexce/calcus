@@ -123,7 +123,7 @@ void UserInterface::postString(std::string *ptr) {
 	}
 
 	const char *str = ptr->c_str();
-	int len = strlen(buffer);
+	int len = strlen(str);
 
 	send(userPtr->getFd(), str, len, 0);
 }

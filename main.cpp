@@ -3,14 +3,16 @@
 #include "UserAccepter.h"
 #include "UserInterface.h"
 #include "UserValidator.h"
-// #include "CommandProcessor.h"
+#include "CommandProcessor.h"
 
 using namespace std;
 
+// default configuration...
 const string IpAddress = "127.0.0.1";
 const int Port = 44818;
 
 UserValidator userValidator;
+CommandProcessor commandProcessor;
 
 inline int authenticateUser(UserInterface &userInterface) {
 	string *login;
@@ -50,18 +52,18 @@ inline void calculateOrLogout(UserInterface &userInterface) {
 		std::cout << "COMMAND: " << *command << endl << flush;
 
 		if (command->compare("logout") == 0) {
+			delete command;
+
 			break;
 		}
 
-		/*
-		string *result = CommandProcessor(command); // calculate the result
+		string *result = commandProcessor(*command); // calculate the result
 
 		delete command;
 
 		userInterface.postResult(result);
 
 		delete result;
-		*/
 	}
 }
 
