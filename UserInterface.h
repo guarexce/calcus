@@ -14,6 +14,7 @@ public:
 	std::string *getPassword();
 	std::string *getCommand();
 	void postResult(std::string *);
+	void resetConnection();
 
 private:
 	User *userPtr;

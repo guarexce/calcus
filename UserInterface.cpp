@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include <sys/socket.h>
+#include <unistd.h>
 
 UserInterface::UserInterface(User *ptr) : userPtr(ptr) {
 	buffer = (char *) malloc(sizeof(char) * length);
@@ -125,4 +126,12 @@ void UserInterface::postString(std::string *ptr) {
 	int len = strlen(buffer);
 
 	send(userPtr->getFd(), str, len, 0);
+}
+
+void UserInterface::resetConnection() {
+	if (userPtr == nullptr || userPtr->getFd() < 0) {
+		return;
+	}
+
+	close(userPtr->getFd());
 }

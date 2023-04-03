@@ -2,13 +2,15 @@
 
 #include "UserAccepter.h"
 #include "UserInterface.h"
-// #include "UserValidator.h"
+#include "UserValidator.h"
 // #include "CommandProcessor.h"
 
 using namespace std;
 
 const string IpAddress = "127.0.0.1";
 const int Port = 44818;
+
+UserValidator userValidator;
 
 inline int authenticateUser(UserInterface &userInterface) {
 	string *login;
@@ -27,11 +29,9 @@ inline int authenticateUser(UserInterface &userInterface) {
 
 	std::cout << "PASSWORD: " << *password << endl << flush;
 
-	/*
-	if (UserValidator(login, password) < 0) {
+	if (userValidator(*login, *password) < 0) {
 		return -1;
 	}
-	*/
 
 	delete login;
 	delete password;
@@ -91,15 +91,23 @@ int main(int argc, char *argv[]) {
 
 		UserInterface userInterface(userPtr);
 
+		cout << "Please authorize:" << endl << flush;
+
 		if (authenticateUser(userInterface) < 0) {
 			cout << "User is not authorized!" << endl << flush;
 
-			break;
+			userInterface.resetConnection();
+
+			delete userPtr;
+
+			continue;
 		}
 
 		cout << "User is authorized!" << endl << flush;
 
 		calculateOrLogout(userInterface);
+
+		userInterface.resetConnection();
 
 		delete userPtr;
 	}
