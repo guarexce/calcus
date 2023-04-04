@@ -50,7 +50,7 @@ public:
 
 	std::string *operator()(std::string command) {
 		command.insert(0, "echo \"");
-		command.append("\" | bc"); // use basic calculator
+		command.append("\" | bc -l"); // use basic calculator
 
 		return executeCommand(command.c_str());
 	}
